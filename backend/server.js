@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const app = require('./routes/route.js');
+const app = require('./routes/index.js');
 const config = require('./config.js');
 const boot = async () => {
     await mongoose.connect(config.mongoUri, config.mongoOptions);
