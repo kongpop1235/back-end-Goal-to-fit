@@ -1,5 +1,24 @@
 const express = require("express");
-const router = express.Router();
+const cors = require("cors");
+const bodyparser = require("body-parser")
+const mongoose = require('mongoose');
+const config = require('../config.js');
+
+const dotenv = require('dotenv');
+dotenv.config();
+const router = express();
+router.use(bodyparser.json());
+router.use(bodyparser.urlencoded({ extended: true }));
+router.use(cors());
+router.use(express.json());
+if (config.isVercel) {
+    router.use(async (req, res, next) => {
+        await mongoose.connect(config.mongoUri, config.mongoOptions);
+        return next();
+    });
+}
+
+
 const signUpTemplateCopy = require('../modles/signupModles');
 const bcrypt = require('bcrypt');
 // const { deleteOne } = require("../modles/signupModles");
